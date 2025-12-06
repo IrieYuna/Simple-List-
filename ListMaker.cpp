@@ -20,6 +20,20 @@ enum Status {
     COMPLETED
 };
 
+void statEnumToString(Status s) {
+    switch (s) {
+    case PENDING:
+        cout << "PENDING\n";
+        break;
+    case ALMOST:
+        cout << "ALMOST\n";
+        break;
+    case COMPLETED:
+        cout << "COMPLETED\n";
+        break;
+    }
+}
+
 class Vec {
 private:
     vector<string> v;
@@ -104,7 +118,8 @@ public:
 
     void showLog() {
         for (int i = 0; i < getSize(); i++) {
-            cout << i << ". " << v[i] << "\n";
+            cout << i << ". " << v[i] << " ";
+			statEnumToString(status[i]);
         }
     }
 
