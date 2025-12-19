@@ -71,26 +71,60 @@ private:
     }
 
     void inputFile() {
-		ifstream fin("SaveFile.txt");
+
         string tmp;
 
-        while (getline(fin, tmp)) {
+		ifstream fin1("SaveFile.txt");
+
+        while (getline(fin1, tmp)) {
             v.emplace_back(tmp);
-            status.emplace_back(PENDING);
         }
 
-        fin.close();
+        fin1.close();
+
+        ifstream fin2("SaveStatus.txt");
+
+        while (getline(fin2, tmp)) {
+
+            if (tmp == "PENDING") status.emplace_back(PENDING);
+            else if (tmp == "ALMOST") status.emplace_back(ALMOST);
+			else if (tmp == "COMPLETED") status.emplace_back(COMPLETED);
+
+        }
+
+        fin2.close();
     }
 
     void outputFile() {
 
-        ofstream fout("SaveFile.txt");
+        ofstream fout1("SaveFile.txt");
 
         for (int i = 0; i < getSize(); i++) {
-            fout << v[i] << "\n";
+            fout1 << v[i] << "\n";
         }
 
-		fout.close();
+		fout1.close();
+
+		ofstream fout2("SaveStatus.txt");
+
+		for (int i = 0; i < getSize(); i++) {
+            switch (status[i]) 
+            {
+            case PENDING:
+                fout2 << "PENDING\n";
+				break;
+            case ALMOST:
+				fout2 << "ALMOST\n";
+				break;
+			case COMPLETED:
+				fout2 << "COMPLETED\n";
+				break;
+            default:
+                break;
+            }
+        }
+
+		fout2.close();
     }
 
     void clearAll() {
